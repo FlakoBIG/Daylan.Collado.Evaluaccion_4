@@ -1,15 +1,17 @@
 export interface usuario{
     nombre:string;
     contrasenia:string;
+    key?:string;
 }
 export interface Recluta {
     nombre: string;
-    apellido1: string;
-    apellido2: string;
+    apellido_paterno: string;
+    apellido_materno: string;
     rut: string;
     fechaNacimiento: string;
     ultimoEstudio: string;
     vehiculos: string[];
-    mensaje: string;
+    porque_quiere_entrar: string;
     manejoArmas: string;
+    key?:string;
 }

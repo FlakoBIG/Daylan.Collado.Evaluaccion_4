@@ -1,7 +1,9 @@
-import { verificarUsuario } from "@/Firebase/Promesas"; // Asegúrate de que esta ruta sea correcta
+import { verificarUsuario } from "@/Firebase/Promesas";
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Card, Spinner, Alert } from "react-bootstrap";
 
+//exporta como predetermianda la funcion home
+// esto es una "variante" de nos enseño , para exportar directamente la funcion en ves de ponerlo abajo
 export default function Home() {
     const [nombre, setNombre] = useState("");
     const [contrasenia, setContrasenia] = useState("");
@@ -40,6 +42,7 @@ export default function Home() {
             try {
                 const existe = await verificarUsuario(usuario);
                 if (existe) {
+                    //si existe nos vamos al menu
                     window.location.href = "/menu";
                 } else {
                     setError("Usuario o contraseña incorrectos");
@@ -56,7 +59,7 @@ export default function Home() {
             <Row className="justify-content-center mt-5">
                 <Col md={6}>
                     <Card>
-                        <Card.Body>
+                        <Card.Body  className='col'>
                             <Card.Title className="text-center mb-4">Login Servicio Militar</Card.Title>
                             {error && <Alert variant="danger">{error}</Alert>}
                             <Form>
@@ -77,7 +80,7 @@ export default function Home() {
                                         placeholder="Ingrese Contraseña"
                                         value={contrasenia}
                                         onChange={(e) => validarContrasenia(e.currentTarget.value)}/>
-                                    <Form.Text style={{ color: "red" }}>{validacionContrasenia}</Form.Text>
+                                    <Form.Text style={{color:"red"}}>{validacionContrasenia}</Form.Text>
                                 </Form.Group>
                                 <div className="d-grid gap-2 mt-4">
                                     <Button
@@ -93,7 +96,7 @@ export default function Home() {
                                                     animation="border"
                                                     size="sm"
                                                     role="status"
-                                                />{""}
+                                                />{" "}
                                                 Cargando...</>) : ("Iniciar sesion")}
                                     </Button>
                                 </div>

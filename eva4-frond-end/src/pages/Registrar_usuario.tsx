@@ -2,9 +2,11 @@ import { RegistrarUsuario } from "@/Firebase/Promesas";
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Card,Spinner,Alert } from "react-bootstrap";
 
+//exporta como predetermianda la funcion home
 export default function Home() {
     const [nombre, setNombre] = useState("");
     const [contrasenia, setContrasenia] = useState("");
+    //validaciones 
     const [validacionNombre, setValidacionNombre] = useState("");
     const [validacionContrasenia, setValidacionContrasenia] = useState("");
     const [todoBienNombre, setTodoBienNombre] = useState(false);
@@ -13,25 +15,29 @@ export default function Home() {
     const [error, setError] = useState("");
     const [registradoalrt, setregistradoalrt] = useState("");
 
-    // validaciones
+    // funciones validaciones
     const validarNombre=(valor:string) =>{
         setNombre(valor);
+        //si valor es menor que 4
         if (valor.length < 4) {
             setValidacionNombre("Debes ingresar 4 caracteres");
             setTodoBienNombre(false);}
-            else {
+        else {
             setValidacionNombre("");
             setTodoBienNombre(true);}};
 
     const validarContrasenia=(valor:string)=>{
         setContrasenia(valor);
+        //consttante que se llama caracteresespeciales que es true si "valor" tiene algun caracter del conjunto y falso si no tiene
         const caracteresEspeciales=/[!@#$%^&*(),.?":{}|<>]/.test(valor);
+        //si valor es menor que 4
         if (valor.length<4) {
             setValidacionContrasenia("Debes ingresar 4 caracteres");
             setTodoBienContrasenia(false);
             return;}
+        //si no tiene los caracteres especiales 
         if (!caracteresEspeciales){
-            setValidacionContrasenia("Debes incluir al menos un carácter especial");
+            setValidacionContrasenia("Debes incluir al menos un caracter especial");
             setTodoBienContrasenia(false);
             return;} 
             else {
@@ -45,37 +51,32 @@ export default function Home() {
         setValidacionNombre("");
         setValidacionContrasenia("");
         setTodoBienNombre(false);
-        setTodoBienContrasenia(false);
-    };
-
+        setTodoBienContrasenia(false)};
     // registrar al usuario
     const registrarUsuario = () => {
+        // si todobiennombre y todobien contrasenia son true ....
         if (todoBienNombre && todoBienContrasenia) {
             setLoading(true);
             setError("");
             setregistradoalrt("");
-            const usuario = { nombre, contrasenia };
+            const usuario = {nombre,contrasenia};
             RegistrarUsuario(usuario)
                 .then(() => {
                     reiniciarEstados();
                     setregistradoalrt("Se registro con exito :D");
-                    setLoading(false);
-                })
+                    setLoading(false)})
                 .catch((e) => {
                     setError("Algo paso ,vuelve a intentarlo denuevo");
                     console.log(e);
                     setLoading(false);
-                });}
-        else {
-            setError("Por favor, Rellena los campos");}};
-
+                })}else{setError("Por favor, Rellena los campos")}};
     // pagina
     return (
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col md={6}>
                     <Card>
-                        <Card.Body>
+                        <Card.Body  className='col'>
                             <Button variant="danger" href="/menu">Volver</Button>
                             <Card.Title className="text-center mb-4">Registrar Usuario</Card.Title>
                             {error && <Alert variant="danger">{error}</Alert>}
@@ -89,7 +90,7 @@ export default function Home() {
                                         value={nombre}
                                         onChange={(e) => validarNombre(e.currentTarget.value)}/>
                                         {/* no funciona el rojo si lo pongo en una clase :c */}
-                                    <Form.Text style={{ color: "red" }}>{validacionNombre}</Form.Text>
+                                    <Form.Text style={{color:"red"}}>{validacionNombre}</Form.Text>
                                 </Form.Group>
                                 <Form.Group className="mt-3">
                                     <Form.Label>Contraseña:</Form.Label>
@@ -99,7 +100,7 @@ export default function Home() {
                                         value={contrasenia}
                                         onChange={(e) => validarContrasenia(e.currentTarget.value)}/>
                                         {/* no funciona el rojo si lo pongo en una clase :c */}
-                                    <Form.Text style={{ color: "red" }}>{validacionContrasenia}</Form.Text>
+                                    <Form.Text style={{color:"red"}}>{validacionContrasenia}</Form.Text>
                                 </Form.Group>
                                 <div className="d-grid gap-2 mt-4">
                                 <Button
@@ -125,4 +126,4 @@ export default function Home() {
                     </Card>
                 </Col>
             </Row>
-        </Container>);}
+        </Container>)}
